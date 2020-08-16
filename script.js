@@ -1,5 +1,5 @@
 const button = document.getElementById('button');
-const audio = document.getElementById('audio');
+const audioElement = document.getElementById('audio');
 
 // VoiceRSS Javascript SDK
 const VoiceRSS = {
@@ -107,19 +107,19 @@ const VoiceRSS = {
   }
 };
 
-// function test() {
-//   VoiceRSS.speech({
-//     key: '5f00f854773245a592c4445b3d5e5345',
-//     src: 'Hello, world!',
-//     hl: 'en-us',
-//     v: 'Linda',
-//     r: 0,
-//     c: 'mp3',
-//     f: '44khz_16bit_stereo',
-//     ssml: false
-//   });
-// }
-// test();
+// Pass Joke API to VoiceRSS API
+function tellMe(joke) {
+  VoiceRSS.speech({
+    key: '5f00f854773245a592c4445b3d5e5345',
+    src: joke,
+    hl: 'en-us',
+    v: 'Linda',
+    r: 0,
+    c: 'mp3',
+    f: '44khz_16bit_stereo',
+    ssml: false
+  });
+}
 
 // Get Jokes from API
 async function getJokes() {
@@ -135,7 +135,7 @@ async function getJokes() {
     } else {
       joke = data.joke;
     }
-    console.log(joke)
+    tellMe(joke);
   } catch(error) {
     console.log('whoops', error);
   }
