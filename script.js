@@ -107,6 +107,10 @@ const VoiceRSS = {
   }
 };
 
+function buttonDisabledDuringPlay() {
+  button.disabled = !button.disabled;
+}
+
 // Pass Joke API to VoiceRSS API
 function tellMe(joke) {
   VoiceRSS.speech({
@@ -129,16 +133,21 @@ async function getJokes() {
     const response = await fetch(apiUrl);
     const data = await response.json();
 
-    // only two part jokes
+    // two part or single jokes
     if (data.setup) {
       joke = `${data.setup} ... ${data.delivery}`;
     } else {
       joke = data.joke;
     }
+
+    buttonDisabledDuringPlay();
     tellMe(joke);
+
   } catch(error) {
     console.log('whoops', error);
   }
 }
 
-getJokes();
+// Event Listeners
+button.addEventListener('click', getJokes);
+audioElement.addEventListener('ended', buttonDisabledDuringPlay);
